@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <title>Magikas game</title>
+  <link rel="stylesheet" href="./stylesheets/style.css">
+  <!-- Data scripts -->
+  <script src="./javascripts/requests/cardRequests.js"></script>
+  <script src="./javascripts/requests/roomRequests.js"></script>
+  <script src="./javascripts/requests/userRequests.js"></script> 
+  <script src="./javascripts/authentication/session.js"></script>
+  <script src="./javascripts/game.js"></script>
+  <!-- Game gui scripts -->
+  <script src="./javascripts/p5.min.js"></script>
+  <script src="./javascripts/renderers/card.js"></script>
+  <script src="./javascripts/renderers/board.js"></script>
+  <script src="./javascripts/managers/boardManager.js"></script>
+  <script src="./javascripts/gamelib.js"></script>
+</head>
+
+<body>
+  <header>
+    <img src="./assets/Magikas_Logo.png" alt="Magikas chart">
+    <section>
+      <h1> Magikas</h1>
+      <h3> The game </h3>
+    </section>
+    <section class="auth">
+       <h4>User: <span  id="username"></span></h2>
+       <input type="button" value="Logout" onclick="logoutUser()">
+    </section>
+  </header>
+  <nav>
+    <a href="https://lumimikon.carrd.co/"> Lumimikon Card</a>
+  </nav>
+  <main id="game">
+  </main>
+  <footer>
+    <p>Pedro Mourinha & Tiago Sousa</p>
+  </footer>
+</body>
+<!--
+  <a href="https://www.flaticon.com/free-icons/rock" title="rock icons">Rock icons created by Icongeek26 - Flaticon</a>
+  <a href="https://www.flaticon.com/free-icons/blank-paper" title="blank paper icons">Blank paper icons created by JunGSa - Flaticon</a>
+  <a href="https://www.flaticon.com/free-icons/scissors" title="scissors icons">Scissors icons created by BomSymbols - Flaticon</a>
+-->
+</html>
