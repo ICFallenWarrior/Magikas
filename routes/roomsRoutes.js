@@ -30,4 +30,10 @@ router.post('/:id/plays', async function(req, res, next) {
     res.status(result.status).send(result.result);
   });
 
+  router.post("/find", async function(req, res, next){
+    let playId = req.body.playId;
+    let result = await rModel.FindRoom(playId);
+    res.status(result.status).send(result.result);
+  });
+
 module.exports = router;

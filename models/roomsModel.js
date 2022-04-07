@@ -1,3 +1,4 @@
+const res = require('express/lib/response');
 var pool = require('./connection.js')
 
 module.exports.getRoomByNameOrTopCard = async function (parameters) {
@@ -107,6 +108,47 @@ module.exports.play = async function (id, value) {
       }
     };
   } catch (err) {
+    console.log(err);
+    return { status: 500, result: err };
+  }
+}
+
+module.exports.FindRoom = async function (id){
+  let sql = `select room.roo_id from room, player where 
+              room.room_is_full = FALSE and 
+              room.roo_id not in (select player_to_room.roo_id from player_to_room where player_to_room.ply_id = $1)
+              group by room.roo_id`;
+
+  try{
+
+    let result = await pool.query(sql, [id]);
+
+    if (result.rows.length > 0) {
+      const roomId = result.rows[0].roo_id;
+      
+      sql = `insert into player_to_room (ply_id, roo_id) VALUES($1,$2);`;
+      result = await pool.query(sql, [id, roomId]);
+
+      sql = `select count(*) as playernum from player_to_room where roo_id = $1`;
+      result = await pool.query(sql, [roomId]);
+
+      if(result.rows[0].playernum == 2) {
+        
+        sql = `UPDATE room SET room_is_full = true where roo_id = $1`;
+        result = await pool.query(sql, [roomId]);
+      }
+
+      return { status: 200, 
+        result: { result: roomId } };
+      } 
+      
+      else{
+        return { status: 404, 
+          result: { result: -1 } };
+        }
+      
+      
+  }catch(err){
     console.log(err);
     return { status: 500, result: err };
   }
