@@ -10,7 +10,7 @@ async function fillRooms() {
         let html = "";
         for(let room of rooms) {
             html+=`<section onclick=openRoom(${room.roo_id})>
-                      <h3>${room.roo_name}</h3>
+                      <h3>Find a Player</h3>
                    </section>`
         }
         document.getElementById("rooms").innerHTML = html;
