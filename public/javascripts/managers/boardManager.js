@@ -44,4 +44,9 @@ class BoardManager {
             if (value) this.play(value);
         }
     }
+    async updateTopCard(){
+            if(this.roo_topcard!= current_topcard){
+                this.refresh()
+       }
+    }
 }
