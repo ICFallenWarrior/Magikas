@@ -3,8 +3,13 @@ const spaceBetweenCards = 1;
 const cardSpaceToBorder = 0.5;
 
 // spacing on top and bottom are in pixels, since we need to place text there
-const topSpace = 60;
-const bottomSpace = 90;
+const topSpace1 = 50;
+const topSpace2 = 200;
+const bottomSpace = 150;
+const leftSpace = 315;
+const rightSpace = 160;
+
+
 
 const resultMsgTimeout = 3000;
 
@@ -12,46 +17,75 @@ const resultMsgTimeout = 3000;
 const baseMsg = "Click the top card to refresh or a value card to play";
 const winMsg = "You won!";
 const looseMsg = "You lost!";
-const topcardLabel = "Top Card";
+const topcardLabel = "Card Slots";
 const valuesLabel = "Choose a card to play";
 
 // all sizes within Board are in percentages, this makes it easier to resize
 class Board {
-    constructor(width,height,x,y,topCard, playValues) {
+    constructor(width,height,x,y,cardSlots, playValues, opponentcardSlots, opponentplayValues) {
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
         this.msg = baseMsg;
-        let nCards = 1+playValues.length;
-        this.cardWidth = width/(nCards+cardSpaceToBorder*2+spaceBetweenCards);
-        this.cardHeight = height-topSpace-bottomSpace;
-        this.roomCard = new Card(this.cardWidth,this.cardHeight,
-                                 x+this.cardWidth*cardSpaceToBorder,
-                                 y+topSpace,
-                                 topCard);
+        this.cardWidth = this.width/12;
+        this.cardHeight = this.height/3;
+        //TOPCARD / SLOTS
+        this.roomCard = [];
+        for(let pos in cardSlots){
+            this.roomCard.push(new Card(this.cardWidth,this.cardHeight,
+                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
+                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
+                                  y+topSpace2,
+                                  cardSlots[pos]));
+        }
+        //REST OF THE CARDS playvalues and slots are in board manager                         
         this.cardValues = [];
         for (let pos in playValues) {
             this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
-                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth,
-                                 y+topSpace,
+                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
+                                 y+topSpace2,
                                 playValues[pos]));
+        }
+        this.opponentroomCard = [];
+        for(let pos in opponentcardSlots){
+            this.roomCard.push(new Card(this.cardWidth,this.cardHeight,
+                x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
+               this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
+                y+topSpace1,
+                opponentcardSlots[pos]));
+        }
+        this.opponentcardValues = [];
+        for (let pos in opponentplayValues) {
+            this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
+                                 x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
+                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
+                                 y+topSpace1,
+                                opponentplayValues[pos]));
         }
     }
     draw() {
-        this.roomCard.draw();
+        for (let card of this.roomCard) {
+            card.draw();
+        }
         for (let card of this.cardValues) {
+            card.draw();
+        }
+        for(let card of this.opponentroomCard){
+            card.draw();
+        }
+        for(let card of this.opponentcardValues){
             card.draw();
         }
         // text
         fill(0,0,0);
         textAlign(CENTER,CENTER);
         text(topcardLabel, this.x+this.cardWidth*cardSpaceToBorder+this.cardWidth/2, 
-            this.y+topSpace/2);
+            this.y+topSpace1/2);
         text(valuesLabel, this.x+this.cardWidth*cardSpaceToBorder+
                 this.cardWidth*spaceBetweenCards+this.cardWidth+
-                (this.cardValues.length*this.cardWidth)/2, this.y+topSpace/2);
+                (this.cardValues.length*this.cardWidth)/2, this.y+topSpace1/2);
         text(this.msg, this.x+this.width/2, this.y+this.height-bottomSpace/2);
     }
 
@@ -61,10 +95,12 @@ class Board {
         return false;
     }    
     roomCardClicked(x,y) {
-        return this.roomCard.clicked(x,y);
+        for (let card of this.cardSlots)
+        if (card.clicked(x,y))return card.clicked(x,y);
+        return false;
     }
     setRoomCard(card) {
-        this.roomCard.setCard(card);
+        for (let card of cardSlots.card)setCard(card);
     }
     resetMsg() { this.msg = baseMsg; }
     setResult(win) {

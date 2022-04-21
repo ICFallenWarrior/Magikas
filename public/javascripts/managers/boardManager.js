@@ -1,4 +1,7 @@
 var playValues=[];
+var cardSlots=[];
+var opponentplayValues=[];
+var opponentcardSlots=[];
 
 class BoardManager {
     
@@ -15,6 +18,9 @@ class BoardManager {
         for (let card of cards) {
             let playValue = card.crd_name;
             playValues.push(playValue);
+            cardSlots.push(playValue);
+            opponentplayValues.push(playValue);
+            opponentcardSlots.push(playValue);
             cardImgs[playValue] = loadImage('./assets/'+playValue+'.png');
         }
         Card.initImgs(cardImgs);
@@ -22,7 +28,9 @@ class BoardManager {
     async initBoard() {
         let room = await getRoom(this.room);
         this.board = new Board(this.width,this.height,this.x,this.y,
-                room.roo_topcard, playValues);   
+                cardSlots, playValues, opponentcardSlots, opponentplayValues);   
+        console.log(cardSlots);
+        console.log(playValues)
     }
     draw() { 
         if (this.board) this.board.draw(); 
@@ -34,7 +42,7 @@ class BoardManager {
     async play(value) {
         let result = await play(this.room, value);
         this.board.setResult(result.victory);
-        this.board.setRoomCard(result.current_topcard);
+        this.board.setRoomCard(cardSlots.cards);
     }
     async click(x,y) {
         if (this.board.roomCardClicked(x,y)) {

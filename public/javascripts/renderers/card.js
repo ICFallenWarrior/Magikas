@@ -17,7 +17,7 @@ class Card {
     draw() {
         fill(100,100,100);
         stroke(0,0,0);
-        rect (this.x,this.y,this.width,this.height,5,5,5,5);
+        rect (this.x,this.y,this.width,this.height,5);
         if (this.card) {
             imageMode(CENTER);
             let img = Card.cardImages[this.card];
