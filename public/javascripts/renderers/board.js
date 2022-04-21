@@ -14,7 +14,7 @@ const rightSpace = 160;
 const resultMsgTimeout = 3000;
 
 // labels
-const baseMsg = "Click the top card to refresh or a value card to play";
+const baseMsg = "Play your cards!";
 const winMsg = "You won!";
 const looseMsg = "You lost!";
 const topcardLabel = "Card Slots";
@@ -86,7 +86,7 @@ class Board {
         text(valuesLabel, this.x+this.cardWidth*cardSpaceToBorder+
                 this.cardWidth*spaceBetweenCards+this.cardWidth+
                 (this.cardValues.length*this.cardWidth)/2, this.y+topSpace1/2);
-        text(this.msg, this.x+this.width/2, this.y+this.height-bottomSpace/2);
+        text(this.msg, this.x+this.width/2, this.y+this.height-bottomSpace/4);
     }
 
     valueClicked(x,y) {
