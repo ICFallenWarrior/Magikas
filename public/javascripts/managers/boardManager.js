@@ -28,9 +28,7 @@ class BoardManager {
     async initBoard() {
         let room = await getRoom(this.room);
         this.board = new Board(this.width,this.height,this.x,this.y,
-                cardSlots, playValues, opponentcardSlots, opponentplayValues);   
-        console.log(cardSlots);
-        console.log(playValues)
+                /*cardSlots*/room.roo_topcard, playValues, opponentcardSlots, opponentplayValues);   
     }
     draw() { 
         if (this.board) this.board.draw(); 
@@ -42,7 +40,7 @@ class BoardManager {
     async play(value) {
         let result = await play(this.room, value);
         this.board.setResult(result.victory);
-        this.board.setRoomCard(cardSlots.cards);
+        this.board.setRoomCard(result.current_topcard);
     }
     async click(x,y) {
         if (this.board.roomCardClicked(x,y)) {

@@ -22,7 +22,7 @@ const valuesLabel = "Choose a card to play";
 
 // all sizes within Board are in percentages, this makes it easier to resize
 class Board {
-    constructor(width,height,x,y,cardSlots, playValues, opponentcardSlots, opponentplayValues) {
+    constructor(width,height,x,y,/*cardSlots*/topCard, playValues, opponentcardSlots, opponentplayValues) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -31,28 +31,32 @@ class Board {
         this.cardWidth = this.width/12;
         this.cardHeight = this.height/3;
         //TOPCARD / SLOTS
-        this.roomCard = [];
+        this.roomCard = new Card(this.cardWidth,this.cardHeight,
+            x+this.cardWidth*cardSpaceToBorder,
+            y+topSpace2,
+            topCard);
+        /*this.roomCard = [];
         for(let pos in cardSlots){
             this.roomCard.push(new Card(this.cardWidth,this.cardHeight,
                                   x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
                                  this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
                                   y+topSpace2,
                                   cardSlots[pos]));
-        }
+        }*/
         //REST OF THE CARDS playvalues and slots are in board manager                         
         this.cardValues = [];
         for (let pos in playValues) {
             this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
-                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
+                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
                                  y+topSpace2,
                                 playValues[pos]));
         }
         this.opponentroomCard = [];
         for(let pos in opponentcardSlots){
-            this.roomCard.push(new Card(this.cardWidth,this.cardHeight,
+            this.opponentroomCard.push(new Card(this.cardWidth,this.cardHeight,
                 x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
-               this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
+               this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
                 y+topSpace1,
                 opponentcardSlots[pos]));
         }
@@ -60,15 +64,16 @@ class Board {
         for (let pos in opponentplayValues) {
             this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
-                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
+                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
                                  y+topSpace1,
                                 opponentplayValues[pos]));
         }
     }
     draw() {
-        for (let card of this.roomCard) {
+        /*for (let card of this.roomCard) {
             card.draw();
-        }
+        }*/
+        this.roomCard.draw();
         for (let card of this.cardValues) {
             card.draw();
         }
@@ -95,12 +100,14 @@ class Board {
         return false;
     }    
     roomCardClicked(x,y) {
-        for (let card of this.cardSlots)
+        /*for (let card of this.cardSlots)
         if (card.clicked(x,y))return card.clicked(x,y);
-        return false;
+        return false;*/
+        return this.roomCard.clicked(x,y);
     }
     setRoomCard(card) {
-        for (let card of cardSlots.card)setCard(card);
+        //for (let card of cardSlots.card)setCard(card);
+        this.roomCard.setCard(card);
     }
     resetMsg() { this.msg = baseMsg; }
     setResult(win) {
