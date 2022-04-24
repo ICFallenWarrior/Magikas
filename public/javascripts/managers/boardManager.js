@@ -52,7 +52,7 @@ class BoardManager {
     }
     async updateTopCard(){
             if(this.roo_topcard!= current_topcard){
-                this.refresh()
+                this.refresh();
        }
     }
 }
