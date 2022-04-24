@@ -1,30 +1,30 @@
 const res = require('express/lib/response');
 var pool = require('./connection.js')
 
-module.exports.getSlotByNameOrTopCard = async function (parameters) {
+module.exports.getSlotByTypeOrTopCard = async function (parameters) {
   try {
-    if (!parameters.name && !parameters.topcard) {
-      return { status: 400, result: { msg: "No filters defined (name or topcard)" } };
+    if (!parameters.type && !parameters.topcard) {
+      return { status: 400, result: { msg: "No filters defined (type or topcard)" } };
     }
     let nparam = 1;
     let values = [];
-    let sql = `Select slot_id,slot_name, crd_name as slot_topcard 
+    let sql = `Select slot_id,slot_type, crd_name as slot_topcard 
                 from slots, card where slot_topcard_id = crd_id`
 
-    if (parameters.name) {
-      sql += ` and slot_name ILIKE $${nparam}`;
-      values.push("%"+parameters.name+"%");
+    if (parameters.type) {
+      sql += ` and slot_type ILIKE $${nparam}`;
+      values.push("%"+parameters.type+"%");
       nparam++;
     }
     if (parameters.topcard) {
-      sql += ` and slot_name ILIKE $${nparam}`;
+      sql += ` and slot_type ILIKE $${nparam}`;
       sql += ` slot_topcard LIKE $${nparam}`;
       values.push(parameters.topcard);
       nparam++;
     }
     let result = await pool.query(sql, values);
-    let rooms = result.rows;
-    return { status: 200, result: rooms };
+    let slots = result.rows;
+    return { status: 200, result: slots };
   } catch (err) {
     console.log(err);
     return { status: 500, result: err };
@@ -34,11 +34,11 @@ module.exports.getSlotByNameOrTopCard = async function (parameters) {
 
 module.exports.getAllSlots = async function() {
   try {
-    let sql = `Select slot_id,slot_name, crd_name as slot_topcard 
+    let sql = `Select slot_id,slot_type, crd_name as slot_topcard 
     from slots, card where slot_topcard_id = crd_id`;
     let result = await pool.query(sql);
-    let rooms = result.rows;
-    return { status: 200, result: rooms};
+    let slots = result.rows;
+    return { status: 200, result: slots};
   } catch (err) {
     console.log(err);
     return { status: 500, result: err};
@@ -47,12 +47,12 @@ module.exports.getAllSlots = async function() {
 
 module.exports.getSlotById = async function (id) {
   try {
-    let sql = `Select slot_id,slot_name, crd_name as slot_topcard 
+    let sql = `Select slot_id,slot_type, crd_name as slot_topcard 
     from slots, card where slot_topcard_id = crd_id and slot_id = $1`;
     let result = await pool.query(sql, [id]);
     if (result.rows.length > 0) {
-      let room = result.rows[0];
-      return { status: 200, result: room };
+      let slot = result.rows[0];
+      return { status: 200, result: slot };
     } else {
       return { status: 404, result: { msg: "No slot with that id" } };
     }
@@ -77,8 +77,8 @@ module.exports.play = async function (id, value) {
       let sqlr = `select * from slot, card where slots.slot_id = $1 
                   and slots.slot_topcard_id = card.crd_id`;
       let resultr = await pool.query(sqlr, [id]);
-      let room = resultr.rows[0];
-      if (!room) {
+      let slot = resultr.rows[0];
+      if (!slot) {
         return { status: 404, result: { msg: "No slot with that id" } };
       } else {
         return {
@@ -86,14 +86,14 @@ module.exports.play = async function (id, value) {
           result: {
             victory: false,
             msg: "You Lost! That card does not beat the top card.",
-            current_topcard: room.crd_name         
+            current_topcard: slot.crd_name         
           }
         };
       }
     }
     let card_id =  result.rows[0].crd_id;
     let card_name = result.rows[0].crd_name;
-    let sql2 = "UPDATE slots SET roo_topcard_id = $1 WHERE slot_id = $2";
+    let sql2 = "UPDATE slots SET slot_topcard_id = $1 WHERE slot_id = $2";
     let result2 = await pool.query(sql2, [  card_id, id  ]);
     if (result2.rowCount == 0) {
       return { status: 500, 
@@ -114,32 +114,32 @@ module.exports.play = async function (id, value) {
 }
 
 module.exports.FindSlot = async function (id){
-  let sql = `select slots.slot_id from slots, player where 
+  let sql = `select slots.slot_id from slots, card where 
               slots.slot_is_full = FALSE and 
-              slots.slot_id not in (select player_to_room.roo_id from player_to_room where player_to_room.ply_id = $1)
-              group by room.roo_id`;
+              slots.slot_id not in (select card_to_slot.slot_id from card_to_slot where card_to_slot.slot_id = $1)
+              group by slots.slot_id`;
 
   try{
 
     let result = await pool.query(sql, [id]);
 
     if (result.rows.length > 0) {
-      const roomId = result.rows[0].roo_id;
+      const slotId = result.rows[0].slot_id;
       
-      sql = `insert into player_to_room (ply_id, roo_id) VALUES($1,$2);`;
-      result = await pool.query(sql, [id, roomId]);
+      sql = `insert into card_to_slot (ply_id, slot_id) VALUES($1,$2);`;
+      result = await pool.query(sql, [id, slotId]);
 
-      sql = `select count(*) as playernum from player_to_room where roo_id = $1`;
-      result = await pool.query(sql, [roomId]);
+      sql = `select count(*) as slotnum from card_to_slot where slot_id = $1`;
+      result = await pool.query(sql, [slotId]);
 
-      if(result.rows[0].playernum == 2) {
+      if(result.rows[0].cardnum == 1) {
         
-        sql = `UPDATE room SET room_is_full = true where roo_id = $1`;
-        result = await pool.query(sql, [roomId]);
+        sql = `UPDATE slots SET slot_is_full = true where slot_id = $1`;
+        result = await pool.query(sql, [slotId]);
       }
 
       return { status: 200, 
-        result: { result: roomId } };
+        result: { result: slotId } };
       } 
       
       else{
