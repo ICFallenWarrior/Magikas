@@ -31,18 +31,18 @@ class Board {
         this.cardWidth = this.width/12;
         this.cardHeight = this.height/3;
         //TOPCARD / SLOTS
-        this.roomCard = new Card(this.cardWidth,this.cardHeight,
+        /*this.roomCard = new Card(this.cardWidth,this.cardHeight,
             x+this.cardWidth*cardSpaceToBorder,
             y+topSpace2,
-            topCard);
-        /*this.roomCard = [];
+            topCard);*/
+        this.roomCard = [];
         for(let pos in cardSlots){
-            this.roomCard.push(new Card(this.cardWidth,this.cardHeight,
-                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
-                                 this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
-                                  y+topSpace2,
-                                  cardSlots[pos]));
-        }*/
+            this.roomCard.push(new Slot(this.cardWidth,this.cardHeight,
+                x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
+               this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
+                y+topSpace2,
+                opponentcardSlots[pos]));
+        }
         //REST OF THE CARDS playvalues and slots are in board manager                         
         this.cardValues = [];
         for (let pos in playValues) {
@@ -54,7 +54,7 @@ class Board {
         }
         this.opponentroomCard = [];
         for(let pos in opponentcardSlots){
-            this.opponentroomCard.push(new Card(this.cardWidth,this.cardHeight,
+            this.opponentroomCard.push(new Slot(this.cardWidth,this.cardHeight,
                 x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
                this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
                 y+topSpace1,
@@ -70,10 +70,10 @@ class Board {
         }
     }
     draw() {
-        /*for (let card of this.roomCard) {
+        for (let card of this.roomCard) {
             card.draw();
-        }*/
-        this.roomCard.draw();
+        }
+        //this.roomCard.draw();
         for (let card of this.cardValues) {
             card.draw();
         }

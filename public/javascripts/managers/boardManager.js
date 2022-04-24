@@ -15,18 +15,24 @@ class BoardManager {
     static async preloadImages() {
         let cardImgs = {}
         let cards = await getCards();
+        let slots = await getSlots();
         for (let card of cards) {
             let playValue = card.crd_name;
             playValues.push(playValue);
-            cardSlots.push(playValue);
             opponentplayValues.push(playValue);
-            opponentcardSlots.push(playValue);
             cardImgs[playValue] = loadImage('./assets/'+playValue+'.png');
         }
         Card.initImgs(cardImgs);
+        for(let slot of slots){
+            let slotnumber = slot.slot_id;
+            cardSlots.push(slotnumber);
+            opponentcardSlots.push(slotnumber);
+        }
     }
     async initBoard() {
         let room = await getRoom(this.room);
+        console.log(cardSlots)
+        console.log(playValues)
         this.board = new Board(this.width,this.height,this.x,this.y,
                 /*cardSlots*/room.roo_topcard, playValues, opponentcardSlots, opponentplayValues);   
     }
