@@ -49,13 +49,24 @@ class BoardManager {
         this.board.setRoomCard(result.current_topcard);
     }
     async click(x,y) {
+<<<<<<< Updated upstream
         if (this.board.roomCardClicked(x,y)) {
             this.refresh();
         } else {
             let value = this.board.valueClicked(x,y);
             if (value) this.play(value);
         }
+=======
+        let value = this.board.valueClicked(x,y);
+        if (value) this.play(value);
+>>>>>>> Stashed changes
     }
+
+    async opponentClick(x,y){ 
+        let opponentvalue = this.board.opponentvalueClicked(x,y);
+        if(opponentvalue) this.play(opponentvalue);
+    }
+
     async updateTopCard(){
             if(this.roo_topcard!= current_topcard){
                 this.refresh();
