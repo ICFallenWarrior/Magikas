@@ -32,8 +32,8 @@ class Card {
     }
     setCard(card) { this.card = card; }
     getCard() { return this.card; }
-    clicked(x,y) {
-        return (x > this.x && x < (this.x+this.width) &&
-            y > this.y && y < (this.y+this.height));
+    
+    clicked(x,y) {    
+        return (x > this.x  && x < (this.x+this.width) && y > this.y && 3 < (this.y+this.height));
     }
 }

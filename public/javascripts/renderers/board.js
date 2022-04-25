@@ -17,12 +17,12 @@ const resultMsgTimeout = 3000;
 const baseMsg = "Play your cards!";
 const winMsg = "You won!";
 const looseMsg = "You lost!";
-const topcardLabel = "Card Slots";
+const topcardLabel = "Card Slot";
 const valuesLabel = "Choose a card to play";
 
 // all sizes within Board are in percentages, this makes it easier to resize
 class Board {
-    constructor(width,height,x,y,/*cardSlots*/topCard, playValues, opponentcardSlots, opponentplayValues) {
+    constructor(width,height,x,y,/*cardSlots*/topCard, playValues, opponentplayValues) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -33,7 +33,7 @@ class Board {
         //TOPCARD / SLOTS
         this.roomCard = new Card(this.cardWidth,this.cardHeight,
             x+this.cardWidth*cardSpaceToBorder,
-            y+topSpace2,
+           this.height/3,
             topCard);
         /*this.roomCard = [];
         for(let pos in cardSlots){
@@ -52,14 +52,7 @@ class Board {
                                  y+topSpace2,
                                 playValues[pos]));
         }
-        this.opponentroomCard = [];
-        for(let pos in opponentcardSlots){
-            this.opponentroomCard.push(new Card(this.cardWidth,this.cardHeight,
-                x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
-               this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
-                y+topSpace1,
-                opponentcardSlots[pos]));
-        }
+
         this.opponentcardValues = [];
         for (let pos in opponentplayValues) {
             this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
@@ -77,9 +70,6 @@ class Board {
         for (let card of this.cardValues) {
             card.draw();
         }
-        for(let card of this.opponentroomCard){
-            card.draw();
-        }
         for(let card of this.opponentcardValues){
             card.draw();
         }
@@ -87,7 +77,7 @@ class Board {
         fill(0,0,0);
         textAlign(CENTER,CENTER);
         text(topcardLabel, this.x+this.cardWidth*cardSpaceToBorder+this.cardWidth/2, 
-            this.y+topSpace1/2);
+            this.height/6);
         text(valuesLabel, this.x+this.cardWidth*cardSpaceToBorder+
                 this.cardWidth*spaceBetweenCards+this.cardWidth+
                 (this.cardValues.length*this.cardWidth)/2, this.y+topSpace1/2);

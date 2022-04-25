@@ -1,7 +1,6 @@
 var playValues=[];
 var cardSlots=[];
 var opponentplayValues=[];
-var opponentcardSlots=[];
 
 class BoardManager {
     
@@ -20,7 +19,6 @@ class BoardManager {
             playValues.push(playValue);
             cardSlots.push(playValue);
             opponentplayValues.push(playValue);
-            opponentcardSlots.push(playValue);
             cardImgs[playValue] = loadImage('./assets/'+playValue+'.png');
         }
         Card.initImgs(cardImgs);
@@ -28,7 +26,7 @@ class BoardManager {
     async initBoard() {
         let room = await getRoom(this.room);
         this.board = new Board(this.width,this.height,this.x,this.y,
-                /*cardSlots*/room.roo_topcard, playValues, opponentcardSlots, opponentplayValues);   
+                /*cardSlots*/room.roo_topcard, playValues, opponentplayValues);   
     }
     draw() { 
         if (this.board) this.board.draw(); 
