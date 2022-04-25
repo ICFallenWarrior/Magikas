@@ -30,6 +30,7 @@ class BoardManager {
         }
     }
     async initBoard() {
+        let room = await getRoom(this.room);
         console.log(cardSlots)
         console.log(playValues)
         this.board = new Board(this.width,this.height,this.x,this.y,
