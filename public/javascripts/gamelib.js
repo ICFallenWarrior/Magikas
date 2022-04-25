@@ -18,6 +18,5 @@ function draw() {
     boardMan.draw();
 }
 function mouseClicked() {
-    boardMan.click(mouseX,mouseY);
-    boardMan.opponentClick(mouseX,mouseY);
+    boardMan.click(mouseX,mouseY);     
 }

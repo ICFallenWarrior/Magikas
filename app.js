@@ -7,7 +7,6 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/playersRoutes');
 var roomsRouter = require('./routes/roomsRoutes');
-var slotsRouter = require('./routes/slotsRoutes');
 
 var app = express();
 var cardsRouter = require('./routes/cardsRoutes');
@@ -25,6 +24,5 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/rooms', roomsRouter);
 app.use('/api/cards',cardsRouter);
-app.use('/api/slots',slotsRouter);
 
 module.exports = app;

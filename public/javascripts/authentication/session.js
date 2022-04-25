@@ -21,12 +21,3 @@ async function getUserInfo() {
         console.log(err);
     }
 }
-
-async function getOpponentInfo() {
-    try {
-        let result = await requestOpponentInfo();
-        return result.result;   
-    } catch(err) {
-        console.log(err);
-    }
-}
