@@ -91,7 +91,6 @@ class Board {
     valueClicked(x,y) {
         let slots = this.roomCard
         for (let card of this.cardValues)
-<<<<<<< Updated upstream
             if (card.clicked(x,y)) return card.getCard();
         return false;
     }    
@@ -100,7 +99,6 @@ class Board {
     }
     setRoomCard(card) {
         this.roomCard.setCard(card);
-=======
             if (card.clicked(x,y)){
                 card.x = slots[0].x;
             }
@@ -114,7 +112,6 @@ class Board {
                 card.x = opponentslots[0].x;
             }
         return false;
->>>>>>> Stashed changes
     }
     resetMsg() { this.msg = baseMsg; }
     setResult(win) {
