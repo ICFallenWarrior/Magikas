@@ -34,7 +34,7 @@ class BoardManager {
         console.log(cardSlots)
         console.log(playValues)
         this.board = new Board(this.width,this.height,this.x,this.y,
-                /*cardSlots*/room.roo_topcard, playValues, opponentcardSlots, opponentplayValues);   
+                cardSlots/*room.roo_topcard*/, playValues, opponentcardSlots, opponentplayValues);   
     }
     draw() { 
         if (this.board) this.board.draw(); 
