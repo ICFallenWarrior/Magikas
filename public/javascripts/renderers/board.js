@@ -22,7 +22,7 @@ const valuesLabel = "Choose a card to play";
 
 // all sizes within Board are in percentages, this makes it easier to resize
 class Board {
-    constructor(width,height,x,y,/*cardSlots*/topCard, playValues, opponentcardSlots, opponentplayValues) {
+    constructor(width,height,x,y,cardSlots, playValues, opponentcardSlots, opponentplayValues) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -30,11 +30,7 @@ class Board {
         this.msg = baseMsg;
         this.cardWidth = this.width/12;
         this.cardHeight = this.height/3;
-        //TOPCARD / SLOTS
-        /*this.roomCard = new Card(this.cardWidth,this.cardHeight,
-            x+this.cardWidth*cardSpaceToBorder,
-            y+topSpace2,
-            topCard);*/
+
         this.roomCard = [];
         for(let pos in cardSlots){
             this.roomCard.push(new Slot(this.cardWidth,this.cardHeight,
@@ -42,8 +38,7 @@ class Board {
                this.cardWidth*spaceBetweenCards+pos*this.cardWidth - rightSpace,
                 y+topSpace2,
                 opponentcardSlots[pos]));
-        }
-        //REST OF THE CARDS playvalues and slots are in board manager                         
+        }                     
         this.cardValues = [];
         for (let pos in playValues) {
             this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
@@ -62,7 +57,7 @@ class Board {
         }
         this.opponentcardValues = [];
         for (let pos in opponentplayValues) {
-            this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
+            this.opponentcardValues.push(new Card(this.cardWidth,this.cardHeight,
                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
                                  this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
                                  y+topSpace1,
@@ -70,20 +65,20 @@ class Board {
         }
     }
     draw() {
-        for (let card of this.roomCard) {
-            card.draw();
+        for (let slot of this.roomCard) {
+            slot.draw();
         }
-        //this.roomCard.draw();
+        
         for (let card of this.cardValues) {
             card.draw();
         }
-        for(let card of this.opponentroomCard){
-            card.draw();
+        for(let slot of this.opponentroomCard){
+            slot.draw();
         }
         for(let card of this.opponentcardValues){
             card.draw();
         }
-        // text
+        
         fill(0,0,0);
         textAlign(CENTER,CENTER);
         text(topcardLabel, this.x+this.cardWidth*cardSpaceToBorder+this.cardWidth/2, 
@@ -100,13 +95,9 @@ class Board {
         return false;
     }    
     roomCardClicked(x,y) {
-        /*for (let card of this.cardSlots)
-        if (card.clicked(x,y))return card.clicked(x,y);
-        return false;*/
         return this.roomCard.clicked(x,y);
     }
     setRoomCard(card) {
-        //for (let card of cardSlots.card)setCard(card);
         this.roomCard.setCard(card);
     }
     resetMsg() { this.msg = baseMsg; }
