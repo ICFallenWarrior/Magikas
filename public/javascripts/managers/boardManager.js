@@ -48,10 +48,15 @@ class BoardManager {
         this.board.setResult(result.victory);
     }
     async click(x,y) {
-
         let value = this.board.valueClicked(x,y);
         if (value) this.play(value);
     }
+
+    async opponentClick(x,y){ 
+        let opponentvalue = this.board.opponentvalueClicked(x,y);
+        if(opponentvalue) this.play(opponentvalue);
+    }
+
     async updateTopCard(){
             if(this.roo_topcard!= current_topcard){
                 this.refresh();

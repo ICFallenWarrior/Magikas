@@ -65,16 +65,15 @@ class Board {
         }
     }
     draw() {
-        for (let slot of this.roomCard) {
+       /*  for (let slot of this.roomCard) {
             slot.draw();
-        }
-        
+        }*/
         for (let card of this.cardValues) {
             card.draw();
         }
-        for(let slot of this.opponentroomCard){
+       /* for(let slot of this.opponentroomCard){
             slot.draw();
-        }
+        }*/
         for(let card of this.opponentcardValues){
             card.draw();
         }
@@ -90,12 +89,22 @@ class Board {
     }
 
     valueClicked(x,y) {
+        let slots = this.roomCard
         for (let card of this.cardValues)
-            if (card.clicked(x,y)) 
-            card.topSpace1 = "20px";
-            return card.getCard();
+            if (card.clicked(x,y)){
+                card.x = slots[0].x;
+            }
         return false;
-    }    
+    }
+
+    opponentvalueClicked(x,y) {
+        let opponentslots = this.opponentroomCard
+        for (let card of this.opponentcardValues)
+            if (card.clicked(x,y)){
+                card.x = opponentslots[0].x;
+            }
+        return false;
+    }
     resetMsg() { this.msg = baseMsg; }
     
     setResult(win) {
