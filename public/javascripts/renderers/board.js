@@ -91,16 +91,13 @@ class Board {
 
     valueClicked(x,y) {
         for (let card of this.cardValues)
-            if (card.clicked(x,y)) return card.getCard();
+            if (card.clicked(x,y)) 
+            card.topSpace1 = "20px";
+            return card.getCard();
         return false;
     }    
-    roomCardClicked(x,y) {
-        return this.roomCard.clicked(x,y);
-    }
-    setRoomCard(card) {
-        this.roomCard.setCard(card);
-    }
     resetMsg() { this.msg = baseMsg; }
+    
     setResult(win) {
         if (win) this.msg = winMsg;
         else this.msg = looseMsg;

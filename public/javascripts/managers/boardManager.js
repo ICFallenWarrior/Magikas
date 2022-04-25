@@ -46,15 +46,11 @@ class BoardManager {
     async play(value) {
         let result = await play(this.room, value);
         this.board.setResult(result.victory);
-        this.board.setRoomCard(result.current_topcard);
     }
     async click(x,y) {
-        if (this.board.roomCardClicked(x,y)) {
-            this.refresh();
-        } else {
-            let value = this.board.valueClicked(x,y);
-            if (value) this.play(value);
-        }
+
+        let value = this.board.valueClicked(x,y);
+        if (value) this.play(value);
     }
     async updateTopCard(){
             if(this.roo_topcard!= current_topcard){
