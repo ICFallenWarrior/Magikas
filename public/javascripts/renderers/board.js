@@ -55,7 +55,7 @@ class Board {
 
         this.opponentcardValues = [];
         for (let pos in opponentplayValues) {
-            this.cardValues.push(new Card(this.cardWidth,this.cardHeight,
+            this.opponentcardValues.push(new Card(this.cardWidth,this.cardHeight,
                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
                                  this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
                                  y+topSpace1,
