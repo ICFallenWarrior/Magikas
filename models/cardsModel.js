@@ -10,4 +10,4 @@ module.exports.getAllCards = async function () {
       console.log(err);
       return { status: 500, result: err };
     }
-  }
+}

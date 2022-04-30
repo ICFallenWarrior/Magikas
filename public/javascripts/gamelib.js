@@ -20,12 +20,6 @@ function draw() {
     boardMan.draw();
 }
 
-function opdraw(){
-    background(220);
-    boardMan.opdraw();
-}
-
-
 function mouseClicked() {
     boardMan.click(mouseX,mouseY);     
 }

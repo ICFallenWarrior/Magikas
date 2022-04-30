@@ -22,11 +22,13 @@ class BoardManager {
             cardImgs[playValue] = loadImage('./assets/'+playValue+'.png');
         }
         Card.initImgs(cardImgs);
+
+        console.log(cardImgs);
     }
 
     static async preloadOpImages() {
         let opcardImgs = {}
-        let opcards = await getCards();
+        let opcards = await getOpCards();
         for (let opcard of opcards) {
             
             let opponnetplayValue = opcard.crd_name;
@@ -35,6 +37,7 @@ class BoardManager {
             opcardImgs[opponnetplayValue] = loadImage('./assets/'+opponnetplayValue+'.png');
         }
         OpCard.opinitImgs(opcardImgs);
+        console.log(opcardImgs);
     }
 
 
