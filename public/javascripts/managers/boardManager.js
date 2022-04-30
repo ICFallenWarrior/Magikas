@@ -16,13 +16,29 @@ class BoardManager {
         let cards = await getCards();
         for (let card of cards) {
             let playValue = card.crd_name;
+
             playValues.push(playValue);
             cardSlots.push(playValue);
-            opponentplayValues.push(playValue);
             cardImgs[playValue] = loadImage('./assets/'+playValue+'.png');
         }
         Card.initImgs(cardImgs);
     }
+
+    static async preloadOpImages() {
+        let opcardImgs = {}
+        let opcards = await getCards();
+        for (let opcard of opcards) {
+            
+            let opponnetplayValue = opcard.crd_name;
+
+            opponentplayValues.push(opponnetplayValue);
+            opcardImgs[opponnetplayValue] = loadImage('./assets/'+opponnetplayValue+'.png');
+        }
+        OpCard.opinitImgs(opcardImgs);
+    }
+
+
+
     async initBoard() {
         let room = await getRoom(this.room);
         this.board = new Board(this.width,this.height,this.x,this.y,

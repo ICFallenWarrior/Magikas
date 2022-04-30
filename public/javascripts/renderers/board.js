@@ -55,7 +55,7 @@ class Board {
 
         this.opponentcardValues = [];
         for (let pos in opponentplayValues) {
-            this.opponentcardValues.push(new Card(this.cardWidth,this.cardHeight,
+            this.opponentcardValues.push(new OpCard(this.cardWidth,this.cardHeight,
                                  x+this.cardWidth*cardSpaceToBorder+this.cardWidth+
                                  this.cardWidth*spaceBetweenCards+pos*this.cardWidth + leftSpace,
                                  y+topSpace1,
@@ -70,8 +70,8 @@ class Board {
         for (let card of this.cardValues) {
             card.draw();
         }
-        for(let card of this.opponentcardValues){
-            card.draw();
+        for(let opcard of this.opponentcardValues){
+            opcard.opdraw();
         }
         // text
         fill(0,0,0);

@@ -5,6 +5,8 @@ var boardMan;
 
 function preload() {
     BoardManager.preloadImages();
+    BoardManager.preloadOpImages();
+
     boardMan = new BoardManager(width,height,0,0,room);
     boardMan.initBoard();
 }
@@ -17,6 +19,13 @@ function draw() {
     background(220);
     boardMan.draw();
 }
+
+function opdraw(){
+    background(220);
+    boardMan.opdraw();
+}
+
+
 function mouseClicked() {
     boardMan.click(mouseX,mouseY);     
 }
