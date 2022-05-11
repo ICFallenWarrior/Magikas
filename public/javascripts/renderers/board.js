@@ -86,6 +86,7 @@ class Board {
 
     valueClicked(x,y) {
         for (let card of this.cardValues)
+<<<<<<< Updated upstream
             if (card.clicked(x,y)) return card.getCard();
         return false;
     }    
@@ -98,6 +99,24 @@ class Board {
     setRoomCard(card) {
         //for (let card of cardSlots.card)setCard(card);
         this.roomCard.setCard(card);
+<<<<<<< HEAD
+=======
+=======
+            if (card.clicked(x,y)){
+                card.x = slots[0].x;
+            }
+        return false;
+    }
+
+    opponentvalueClicked(x,y) {
+        let opponentslots = this.opponentroomCard
+        for (let card of this.opponentcardValues)
+            if (card.clicked(x,y)){
+                card.x = opponentslots[0].x;
+            }
+        return false;
+>>>>>>> Stashed changes
+>>>>>>> parent of 9bb9210 (Fear)
     }
     resetMsg() { this.msg = baseMsg; }
     setResult(win) {
