@@ -33,7 +33,7 @@ class Card {
     getCard() { return this.card; }
     
     clicked(x,y) {    
-        return (x > this.x  && x < (this.x+this.width) && y > this.y && 3 < (this.y+this.height));
+        return (x > this.x  && x < (this.x+this.width) && y > this.y && y < (this.y+this.height));
     }
 }
 
