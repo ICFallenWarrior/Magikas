@@ -60,23 +60,14 @@ class BoardManager {
         this.board.setRoomCard(result.current_topcard);
     }
     async click(x,y) {
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
->>>>>>> parent of 9bb9210 (Fear)
         if (this.board.roomCardClicked(x,y)) {
             this.refresh();
         } else {
             let value = this.board.valueClicked(x,y);
             if (value) this.play(value);
         }
-<<<<<<< HEAD
-=======
-=======
         let value = this.board.valueClicked(x,y);
         if (value) this.play(value);
->>>>>>> Stashed changes
->>>>>>> parent of 9bb9210 (Fear)
     }
     async updateTopCard(){
             if(this.roo_topcard!= current_topcard){
