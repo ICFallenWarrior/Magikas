@@ -11,9 +11,8 @@ async function requestAction(pId, pmId, data)
 				method: "POST",
 				body: JSON.stringify(data)
 			});
-		var result = await response.json();
 		// We are not checking for errors (considering the GUI is only allowing correct choices)
-		return result;
+		return await response.json();
 	}
 	catch (err)
 	{
@@ -25,7 +24,10 @@ async function requestAction(pId, pmId, data)
 async function requestPlay(pId, pmId, deckId)
 {
 	return await requestAction(pId, pmId,
-		{deckId: deckId, action: "play"});
+		{
+			deckId: deckId, 
+			action: "play"
+		});
 }
 
 async function requestAttack(pId, pmId, deckId, opDeckId)
@@ -40,14 +42,28 @@ async function requestAttack(pId, pmId, deckId, opDeckId)
 
 async function requestAttackPlayer(pId, pmId, deckId)
 {
-	return await requestAction(pId, pmId,
-		{deckId: deckId, action: "attackPlayer"});
+	return await requestAction(pId, pmId, 
+		{
+			deckId: deckId, 
+			action: "attackPlayer"
+		});
 }
 
 async function requestEndTurn(pId, pmId)
 {
 	return await requestAction(pId, pmId,
-		{action: "endturn"});
+		{
+			action: "endturn"
+		});
+}
+
+async function requestRemoveCard(pId, pmId, deckId)
+{
+	return await requestAction(pId, pmId,
+		{
+			deckId: deckId, 
+			action: "removeCard"
+		});
 }
 
 async function requestPlayerMatchDeck(pId, pmId)
@@ -55,9 +71,8 @@ async function requestPlayerMatchDeck(pId, pmId)
 	try
 	{
 		const response = await fetch(`/api/players/${pId}/playermatches/${pmId}/deck`);
-		var result = await response.json();
 		// We are not checking for errors (considering id exists)
-		return result;
+		return await response.json();
 	}
 	catch (err)
 	{
@@ -71,9 +86,8 @@ async function requestPlayerMatchInfo(id)
 	try
 	{
 		const response = await fetch(`/api/players/playermatches/${id}`);
-		var result = await response.json();
 		// We are not checking for errors (considering id exists)
-		return result;
+		return await response.json();
 	}
 	catch (err)
 	{
@@ -86,11 +100,9 @@ async function requestOpponentInfo(pId, pmId, matchId)
 {
 	try
 	{
-		const response = await fetch(
-			`/api/players/${pId}/matches/${matchId}/playermatches/${pmId}/opponent`);
-		var result = await response.json();
+		const response = await fetch(`/api/players/${pId}/matches/${matchId}/playermatches/${pmId}/opponent`);
 		// We are not checking for errors (considering id exists)
-		return result;
+		return await response.json();
 	}
 	catch (err)
 	{
@@ -105,9 +117,8 @@ async function requestPlayerInfo(id)
 	try
 	{
 		const response = await fetch(`/api/players/${id}`);
-		var result = await response.json();
 		// We are not checking for errors (considering id exists)
-		return result;
+		return await response.json();
 	}
 	catch (err)
 	{

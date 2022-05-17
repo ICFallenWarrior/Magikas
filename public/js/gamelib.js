@@ -24,9 +24,7 @@ let startingTurn = false;
 
 async function refresh()
 {
-	if (scoreBoard &&
-		(scoreBoard.getPlayerState() == "Wait" ||
-			scoreBoard.getPlayerState() == "Endturn"))
+	if (scoreBoard && (scoreBoard.getPlayerState() == "Wait" || scoreBoard.getPlayerState() == "Endturn"))
 	{
 		await loadScoreBoard();
 		await loadCards();
@@ -85,6 +83,20 @@ async function end()
 	refreshButtons();
 }
 
+async function removeCard() 
+{
+	for (let card in hand)
+	{
+		if (card.getHp() == 0)
+		{
+			await requestRemoveCard(playerId, playerMatchId, card.getId());
+			await loadCards();
+			setCardsState();
+			refreshButtons();
+		}
+	}
+}
+
 function preload()
 {
 
@@ -95,8 +107,7 @@ async function loadScoreBoard()
 	let p1 = await requestPlayerMatchInfo(playerMatchId);
 	let p2 = await requestPlayerMatchInfo(opponentMatchId);
 	playerId = p1.ply_id;
-	scoreBoard = new ScoreBoard(p1.ply_name, p2.ply_name,
-		p1.pm_hp, p2.pm_hp, p1.pms_name, p2.pms_name, p1.mt_turn, p1.mt_finished);
+	scoreBoard = new ScoreBoard(p1.ply_name, p2.ply_name, p1.pm_hp, p2.pm_hp, p1.pms_name, p2.pms_name, p1.mt_turn, p1.mt_finished);
 }
 
 async function setup()
@@ -153,8 +164,13 @@ function refreshButtons()
 			{
 				countAlive++;
 			}
+			else if (card.getHp() <= 0)
+
+			{
+				removeCard();
+			}
 		}
-		if (countAlive == 0)
+		if (countAlive === 0)
 		{
 			attackButton.setNewFunc(attackPlayer, "Attack Player");
 			if (returnSelected(table))
@@ -216,11 +232,15 @@ function setCardsState()
 				{
 					card.enable();
 				}
+				else if (card.getHp() <= 0)
+
+				{
+					removeCard();
+				}
 			}
 		}
 	}
 }
-
 
 async function loadCards()
 {
@@ -236,24 +256,24 @@ async function loadCards()
 	{
 		if (card.cp_name === "Hand")
 		{
-			hand.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp, false,
-				HANDX + CARDSPACE * handPos, HANDY));
+			hand.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp, false,HANDX + CARDSPACE * handPos, HANDY));
 			handPos++;
 		}
 		else
 		{
-			table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,
-				card.cp_name === "TablePlayed",
-				TABLEX + CARDSPACE * tablePos, TABLEY));
+			table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,card.cp_name === "TablePlayed",TABLEX + CARDSPACE * tablePos, TABLEY));
 			tablePos++;
 		}
 	}
 	for (let card of opCards)
 	{
-		opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,
-			card.cp_name === "TablePlayed",
-			OPX + CARDSPACE * opPos, OPY));
+		opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,card.cp_name === "TablePlayed",OPX + CARDSPACE * opPos, OPY));
 		opPos++;
+		
+		if (card.getHp <= 0)
+		{
+			removeCard();
+		}
 	}
 }
 
@@ -277,7 +297,6 @@ function draw()
 	{
 		button.draw();
 	}
-
 }
 
 function mouseClicked()
