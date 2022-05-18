@@ -18,7 +18,6 @@ module.exports.getPlayersOfMatch = async function (mId)
 	}
 };
 
-
 module.exports.getMatchOfPlayer = async function (pmId)
 {
 	try
