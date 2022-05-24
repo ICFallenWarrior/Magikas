@@ -30,7 +30,7 @@ class Button
 			{
 				fill(100, 200, 100);
 			}
-			rect(this.x, this.y, BWIDTH, BHEIGHT, 2, 2, 2, 2);
+			rect(this.x, this.y, BWIDTH, BHEIGHT, 5, 5, 5, 5);
 			textAlign(CENTER, CENTER);
 
 			fill(0, 0, 0);
@@ -86,8 +86,7 @@ class Button
 	{
 		if (this.enabled && this.visible)
 		{
-			if (this.x <= x && (this.x + BWIDTH) >= x &&
-				this.y <= y && (this.y + BHEIGHT) >= y)
+			if (this.x <= x && (this.x + BWIDTH) >= x && this.y <= y && (this.y + BHEIGHT) >= y)
 			{
 				this.pressed = true;
 				setTimeout(() =>
