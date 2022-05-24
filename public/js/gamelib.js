@@ -15,9 +15,9 @@ let opponent = [];
 const OPX = 400;
 const OPY = 20;
 
-const attackButton = new Button("Attack", 400, 650, attack);
-const playButton = new Button("Play Card", 140, 650, play);
-const endTurnButton = new Button("End Turn", 800, 650, end);
+const attackButton = new Button("Attack", 500, 650, attack);
+const playButton = new Button("Play Card", 150, 650, play);
+const endTurnButton = new Button("End Turn", 850, 650, end);
 const buttons = [attackButton, playButton, endTurnButton];
 
 let startingTurn = false;
@@ -87,7 +87,7 @@ async function removeCard()
 {
 	for (let card in hand)
 	{
-		if (card.getHp() == 0)
+		if (card.getCardAlive() == false) 
 		{
 			await requestRemoveCard(playerId, playerMatchId, card.getId());
 			await loadCards();
@@ -115,6 +115,7 @@ async function setup()
 	noLoop();
 	let canvas = createCanvas(width, height);
 	canvas.parent('game');
+	background(0);
 	// preload card images
 	let cards = await requestCardsInfo();
 	for (let card of cards)
@@ -123,7 +124,7 @@ async function setup()
 	}
 	// if I had the url of the images on the database it would be even easier (and it is more correct)
 	// cardImgs[card.crd_id] = await loadImage(card.crd_url);   
-
+	
 	await loadScoreBoard();
 	await loadCards();
 	setCardsState();
@@ -160,17 +161,12 @@ function refreshButtons()
 		let countAlive = 0;
 		for (let card of opponent)
 		{
-			if (card.getHp() > 0)
+			if (card.getCardAlive() == true)
 			{
 				countAlive++;
 			}
-			else if (card.getHp() <= 0)
-
-			{
-				removeCard();
-			}
 		}
-		if (countAlive === 0)
+		if (countAlive == 0)
 		{
 			attackButton.setNewFunc(attackPlayer, "Attack Player");
 			if (returnSelected(table))
@@ -228,14 +224,9 @@ function setCardsState()
 		{
 			for (let card of opponent)
 			{
-				if (card.getHp() > 0)
+				if (card.getCardAlive() == true)
 				{
 					card.enable();
-				}
-				else if (card.getHp() <= 0)
-
-				{
-					removeCard();
 				}
 			}
 		}
@@ -256,24 +247,19 @@ async function loadCards()
 	{
 		if (card.cp_name === "Hand")
 		{
-			hand.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp, false,HANDX + CARDSPACE * handPos, HANDY));
+			hand.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, false,HANDX + CARDSPACE * handPos, HANDY));
 			handPos++;
 		}
 		else
 		{
-			table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,card.cp_name === "TablePlayed",TABLEX + CARDSPACE * tablePos, TABLEY));
+			table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",TABLEX + CARDSPACE * tablePos, TABLEY));
 			tablePos++;
 		}
 	}
 	for (let card of opCards)
 	{
-		opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,card.cp_name === "TablePlayed",OPX + CARDSPACE * opPos, OPY));
+		opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",OPX + CARDSPACE * opPos, OPY));
 		opPos++;
-		
-		if (card.getHp <= 0)
-		{
-			removeCard();
-		}
 	}
 }
 

@@ -4,8 +4,7 @@ module.exports.getCards = async function ()
 {
 	try
 	{
-		let sql = `select *
-                   from card`;
+		let sql = `select * from card`;
 		let res = await pool.query(sql);
 		return {status: 200, result: res.rows};
 	}
