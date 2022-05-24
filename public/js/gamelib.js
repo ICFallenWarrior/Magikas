@@ -15,9 +15,23 @@ let opponent = [];
 const OPX = 400;
 const OPY = 20;
 
-const attackButton = new Button("Attack", 500, 650, attack);
-const playButton = new Button("Play Card", 150, 650, play);
-const endTurnButton = new Button("End Turn", 850, 650, end);
+const slot1 = new Slot(TABLEX, TABLEY);
+const slot2 = new Slot(TABLEX + CARDSPACE, TABLEY);
+const slot3 = new Slot(TABLEX + CARDSPACE * 2, TABLEY);
+const slot4 = new Slot(TABLEX + CARDSPACE * 3, TABLEY);
+const slot5 = new Slot(TABLEX + CARDSPACE * 4, TABLEY);
+
+const opslot1 = new Slot(OPX, OPY);
+const opslot2 = new Slot(OPX + CARDSPACE, OPY);
+const opslot3 = new Slot(OPX + CARDSPACE * 2, OPY);
+const opslot4 = new Slot(OPX + CARDSPACE * 3, OPY);
+const opslot5 = new Slot(OPX + CARDSPACE * 4, OPY);
+const slots = [slot1,slot2,slot3,slot4, slot5, opslot1, opslot2, opslot3, opslot4, opslot5];
+
+
+const attackButton = new Button("Attack", 400, 650, attack);
+const playButton = new Button("Play Card", 140, 650, play);
+const endTurnButton = new Button("End Turn", 800, 650, end);
 const buttons = [attackButton, playButton, endTurnButton];
 
 let startingTurn = false;
@@ -262,11 +276,13 @@ async function loadCards()
 		opPos++;
 	}
 }
-
 function draw()
 {
 	background(220);
 	scoreBoard.draw();
+	for(let slot of slots){
+		slot.draw();
+	}
 	for (let card of table)
 	{
 		card.draw();
@@ -283,6 +299,7 @@ function draw()
 	{
 		button.draw();
 	}
+
 }
 
 function mouseClicked()

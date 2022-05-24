@@ -42,7 +42,7 @@ class Card
 		{
 			stroke(0, 0, 0);
 		}
-		rect(this.x, this.y, CWIDTH, CHEIGHT, 5, 5, 5, 5);
+		rect(this.x, this.y, CWIDTH, CHEIGHT, 2);
 		fill(0, 0, 0);
 		stroke(0, 0, 0);
 		strokeWeight(1);
