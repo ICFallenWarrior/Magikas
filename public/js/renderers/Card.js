@@ -44,7 +44,11 @@ class Card
 		}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rect(this.x, this.y, CWIDTH, CHEIGHT, 2);
+=======
+		rect(this.x, this.y, CWIDTH, CHEIGHT, 2, 2, 2, 2);
+>>>>>>> parent of a452d48 (Merge pull request #3 from darkvergus/main)
 =======
 		rect(this.x, this.y, CWIDTH, CHEIGHT, 2, 2, 2, 2);
 >>>>>>> parent of a452d48 (Merge pull request #3 from darkvergus/main)
