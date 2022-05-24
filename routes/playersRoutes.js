@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const pModel = require("../models/playersModel");
+var express = require('express');
+var router = express.Router();
+var pModel = require("../models/playersModel");
 
 router.post('/:pId/playermatches/:pmId/actions', async function (req, res, next)
 {
@@ -72,7 +72,7 @@ router.get('/playermatches/:id', async function (req, res, next)
 });
 
 
-router.post('/', async function (req, res, next)
+router.post('', async function (req, res, next)
 {
 	console.log("Register player ");
 	let username = req.body.username;

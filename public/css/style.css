@@ -122,7 +122,6 @@ nav.shift ul li a:hover:after {
 }
 
 footer {
-    margin-top: 50px;
     flex: 1 0 auto;
     padding: 10px 20%;
     background-color: coral;
@@ -133,6 +132,6 @@ footer {
 
 #defaultCanvas0 {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+    padding-bottom: 20px;
 }

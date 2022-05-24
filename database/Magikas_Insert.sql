@@ -1,8 +1,14 @@
-insert into card (crd_name, crd_description) values('Dark','Dark consumes Forest and Water');
+insert into card (crd_name, crd_description) values('Dark','Dark consumes Forst and Water');
 insert into card (crd_name, crd_description) values('Light','Light destroys Dark and Fire');
-insert into card (crd_name, crd_description) values('Forest','Forest absorbs Light and Water');
-insert into card (crd_name, crd_description) values('Water','Water beats Fire and eats Light');
+insert into card (crd_name, crd_description) values('Forest','Forest absovers Ligth and Water');
+insert into card (crd_name, crd_description) values('Water','Water beats Fire and eats Ligth');
 insert into card (crd_name, crd_description) values('Fire','Fire burns Forest and lights Dark');
+
+insert into slots (slot_type) values('Monster 1');
+insert into slots (slot_type) values('Monster 2');
+insert into slots (slot_type) values('Monster 3');
+insert into slots (slot_type) values('Monster 4');
+insert into slots (slot_type) values('Monster 5');
 
 insert into cardwcard (cwc_cwins_id, cwc_clooses_id) values(3,2);
 insert into cardwcard (cwc_cwins_id, cwc_clooses_id) values(2,1);
@@ -39,17 +45,17 @@ values ('Table');
 insert into cardpos (cp_name)
 values ('TablePlayed');
 
-insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_alive)
-values (1, 1, 1, true);
-insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_alive)
-values (1, 1, 3, true);
-insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_alive)
-values (1, 1, 1, true);
-insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_alive)
-values (2, 1, 2, true);
-insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_alive)
-values (2, 1, 5, true);
-insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_alive)
-values (2, 1, 3, true;
+insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_hp)
+values (1, 1, 1, 4);
+insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_hp)
+values (1, 1, 3, 4);
+insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_hp)
+values (1, 1, 1, 4);
+insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_hp)
+values (2, 1, 2, 4);
+insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_hp)
+values (2, 1, 5, 4);
+insert into deck (deck_pm_id, deck_pos_id, deck_card_id, deck_card_hp)
+values (2, 1, 3, 4);
 
 commit;

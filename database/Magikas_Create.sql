@@ -5,11 +5,18 @@ create table player (
             primary key(ply_id)
 );
         
+
 create table card (
 					crd_id SERIAL not null,
 					crd_name VARCHAR(60) not null, 	-- card name
 					crd_description VARCHAR(60), 		-- card description (this card wins over ...)
 					primary key (crd_id)	
+);
+
+create table slots (
+					slot_id SERIAL not null,
+					slot_type VARCHAR(60) not null, 	-- slot type
+					primary key (slot_id)	
 );
 
 create table cardwcard (
@@ -57,7 +64,7 @@ create table deck
     deck_pm_id   INT    not null,
     deck_pos_id  INT    not null,
     deck_card_id INT    not null,
-    deck_card_alive boolean not null,
+    deck_card_hp INT    not null,
     primary key (deck_id)
 );
 
