@@ -16,6 +16,7 @@ const OPX = 400;
 const OPY = 20;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const slot1 = new Slot(TABLEX, TABLEY);
 const slot2 = new Slot(TABLEX + CARDSPACE, TABLEY);
 const slot3 = new Slot(TABLEX + CARDSPACE * 2, TABLEY);
@@ -30,6 +31,8 @@ const opslot5 = new Slot(OPX + CARDSPACE * 4, OPY);
 const slots = [slot1,slot2,slot3,slot4, slot5, opslot1, opslot2, opslot3, opslot4, opslot5];
 
 
+=======
+>>>>>>> parent of a452d48 (Merge pull request #3 from darkvergus/main)
 =======
 >>>>>>> parent of a452d48 (Merge pull request #3 from darkvergus/main)
 const attackButton = new Button("Attack", 400, 650, attack);
