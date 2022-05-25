@@ -1,14 +1,14 @@
 require('dotenv').config();
 
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var playersRouter = require('./routes/playersRoutes');
-var cardsRouter = require('./routes/cardsRoutes');
+const playersRouter = require('./routes/playersRoutes');
+const cardsRouter = require('./routes/cardsRoutes');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -15,32 +15,9 @@ let opponent = [];
 const OPX = 400;
 const OPY = 20;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-const slot1 = new Slot(TABLEX, TABLEY);
-const slot2 = new Slot(TABLEX + CARDSPACE, TABLEY);
-const slot3 = new Slot(TABLEX + CARDSPACE * 2, TABLEY);
-const slot4 = new Slot(TABLEX + CARDSPACE * 3, TABLEY);
-const slot5 = new Slot(TABLEX + CARDSPACE * 4, TABLEY);
-
-const opslot1 = new Slot(OPX, OPY);
-const opslot2 = new Slot(OPX + CARDSPACE, OPY);
-const opslot3 = new Slot(OPX + CARDSPACE * 2, OPY);
-const opslot4 = new Slot(OPX + CARDSPACE * 3, OPY);
-const opslot5 = new Slot(OPX + CARDSPACE * 4, OPY);
-const slots = [slot1,slot2,slot3,slot4, slot5, opslot1, opslot2, opslot3, opslot4, opslot5];
-
-
-=======
->>>>>>> parent of a452d48 (Merge pull request #3 from darkvergus/main)
-=======
->>>>>>> parent of a452d48 (Merge pull request #3 from darkvergus/main)
-=======
->>>>>>> parent of a452d48 (Merge pull request #3 from darkvergus/main)
-const attackButton = new Button("Attack", 400, 650, attack);
-const playButton = new Button("Play Card", 140, 650, play);
-const endTurnButton = new Button("End Turn", 800, 650, end);
+const attackButton = new Button("Attack", 500, 650, attack);
+const playButton = new Button("Play Card", 150, 650, play);
+const endTurnButton = new Button("End Turn", 850, 650, end);
 const buttons = [attackButton, playButton, endTurnButton];
 
 let startingTurn = false;
@@ -110,7 +87,7 @@ async function removeCard()
 {
 	for (let card in hand)
 	{
-		if (card.getHp() == 0)
+		if (card.getCardAlive() == false) 
 		{
 			await requestRemoveCard(playerId, playerMatchId, card.getId());
 			await loadCards();
@@ -138,6 +115,7 @@ async function setup()
 	noLoop();
 	let canvas = createCanvas(width, height);
 	canvas.parent('game');
+	background(0);
 	// preload card images
 	let cards = await requestCardsInfo();
 	for (let card of cards)
@@ -146,7 +124,7 @@ async function setup()
 	}
 	// if I had the url of the images on the database it would be even easier (and it is more correct)
 	// cardImgs[card.crd_id] = await loadImage(card.crd_url);   
-
+	
 	await loadScoreBoard();
 	await loadCards();
 	setCardsState();
@@ -183,17 +161,12 @@ function refreshButtons()
 		let countAlive = 0;
 		for (let card of opponent)
 		{
-			if (card.getHp() > 0)
+			if (card.getCardAlive() == true)
 			{
 				countAlive++;
 			}
-			else if (card.getHp() <= 0)
-
-			{
-				removeCard();
-			}
 		}
-		if (countAlive === 0)
+		if (countAlive == 0)
 		{
 			attackButton.setNewFunc(attackPlayer, "Attack Player");
 			if (returnSelected(table))
@@ -251,14 +224,9 @@ function setCardsState()
 		{
 			for (let card of opponent)
 			{
-				if (card.getHp() > 0)
+				if (card.getCardAlive() == true)
 				{
 					card.enable();
-				}
-				else if (card.getHp() <= 0)
-
-				{
-					removeCard();
 				}
 			}
 		}
@@ -279,33 +247,26 @@ async function loadCards()
 	{
 		if (card.cp_name === "Hand")
 		{
-			hand.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp, false,HANDX + CARDSPACE * handPos, HANDY));
+			hand.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, false,HANDX + CARDSPACE * handPos, HANDY));
 			handPos++;
 		}
 		else
 		{
-			table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,card.cp_name === "TablePlayed",TABLEX + CARDSPACE * tablePos, TABLEY));
+			table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",TABLEX + CARDSPACE * tablePos, TABLEY));
 			tablePos++;
 		}
 	}
 	for (let card of opCards)
 	{
-		opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, card.deck_card_hp,card.cp_name === "TablePlayed",OPX + CARDSPACE * opPos, OPY));
+		opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",OPX + CARDSPACE * opPos, OPY));
 		opPos++;
-		
-		if (card.getHp <= 0)
-		{
-			removeCard();
-		}
 	}
 }
+
 function draw()
 {
 	background(220);
 	scoreBoard.draw();
-	for(let slot of slots){
-		slot.draw();
-	}
 	for (let card of table)
 	{
 		card.draw();
@@ -322,7 +283,6 @@ function draw()
 	{
 		button.draw();
 	}
-
 }
 
 function mouseClicked()
