@@ -48,10 +48,9 @@ header {
 }
 
 .logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 150px;
+    position: center;
+    left: 640px;
+    width: 650px;
 }
 
 nav {
