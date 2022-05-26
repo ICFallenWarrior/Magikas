@@ -15,6 +15,19 @@ let opponent = [];
 const OPX = 400;
 const OPY = 20;
 
+const slot1 = new Slot(TABLEX, TABLEY);
+const slot2 = new Slot(TABLEX + CARDSPACE, TABLEY);
+const slot3 = new Slot(TABLEX + CARDSPACE * 2, TABLEY);
+const slot4 = new Slot(TABLEX + CARDSPACE * 3, TABLEY);
+const slot5 = new Slot(TABLEX + CARDSPACE * 4, TABLEY);
+
+const opslot1 = new Slot(OPX, OPY);
+const opslot2 = new Slot(OPX + CARDSPACE, OPY);
+const opslot3 = new Slot(OPX + CARDSPACE * 2, OPY);
+const opslot4 = new Slot(OPX + CARDSPACE * 3, OPY);
+const opslot5 = new Slot(OPX + CARDSPACE * 4, OPY);
+const slots = [slot1,slot2,slot3,slot4, slot5, opslot1, opslot2, opslot3, opslot4, opslot5];
+
 const attackButton = new Button("Attack", 500, 650, attack);
 const playButton = new Button("Play Card", 150, 650, play);
 const endTurnButton = new Button("End Turn", 850, 650, end);
@@ -161,6 +174,7 @@ function refreshButtons()
 		let countAlive = 0;
 		for (let card of opponent)
 		{
+			// if opponent has a card alive
 			if (card.getCardAlive() == true)
 			{
 				countAlive++;
@@ -224,6 +238,7 @@ function setCardsState()
 		{
 			for (let card of opponent)
 			{
+				// if opponent has a card alive
 				if (card.getCardAlive() == true)
 				{
 					card.enable();
@@ -245,6 +260,7 @@ async function loadCards()
 	opponent = [];
 	for (let card of myCards)
 	{
+		
 		if (card.cp_name === "Hand")
 		{
 			hand.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, false,HANDX + CARDSPACE * handPos, HANDY));
@@ -252,14 +268,22 @@ async function loadCards()
 		}
 		else
 		{
-			table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",TABLEX + CARDSPACE * tablePos, TABLEY));
-			tablePos++;
+			// Limit the number of cards played in the table to 5
+			if(table.length < 5)
+			{
+				table.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",TABLEX + CARDSPACE * tablePos, TABLEY));
+				tablePos++;
+			}
 		}
 	}
 	for (let card of opCards)
 	{
-		opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",OPX + CARDSPACE * opPos, OPY));
-		opPos++;
+		// Limit the number of cards played in the table to 5
+		if (opponent.length < 5) 
+		{
+			opponent.push(new Card(card.deck_id, card.deck_card_id, card.crd_name, true, card.cp_name === "TablePlayed",OPX + CARDSPACE * opPos, OPY));
+			opPos++;
+		}
 	}
 }
 
@@ -267,6 +291,12 @@ function draw()
 {
 	background(220);
 	scoreBoard.draw();
+	
+	// draw the slots
+	for (let slot of slots) 
+	{
+		slot.draw();
+	}
 	for (let card of table)
 	{
 		card.draw();
