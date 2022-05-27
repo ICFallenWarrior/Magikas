@@ -8,26 +8,33 @@
 </head>
 <body>
 <header>
-    <style>
-        body {
-          background-image: url('./assets/Background.jpg');
-          background-repeat: no-repeat;
-          background-attachment: fixed;  
-          background-size: cover;
-        }
-    </style>
     <img class="logo" src="./assets/Magikas_Logo.png" alt="Magikas chart">
+    <section>
+        <nav class="menu">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://lumimikon.carrd.co/">Lumimikon Card</a></li>
+            </ul>
+        </nav>
+    </section>
 </header>
-
+<section>
+    <h1> Magikas</h1>
+    <h3> The game of Elements</h3>
+</section>
 <main>
     <section>
+        <p> If you have a match running you will enter that match.
+            Otherwise it will go to the match making page.
+        </p>
         <label for="name">Name: </label><input id="name" type="text">
         <label for="password"></label>Password: <input id="password" type="password">
         <p><input onclick="login()" type="button" value="Login"></p>
-        <form action="register.html">
-            <button type="submit">Register</button>
-        </form>
+        <p><a href="register.html">Create a new account</a></p>
     </section>
 </main>
+<footer>
+    Made by Pedro Mourinha & Tiago Sousa
+</footer>
 </body>
 </html>
