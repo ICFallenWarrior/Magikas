@@ -592,7 +592,7 @@ async function Spells(pmId, deckId, cardId){
 
 
             case(7):
-                    let sqlgrenade = `Update deck set deck_card_hp = deck_card_hp - 2 where deck_pm_id = $1 and deck_pos_id > 1`
+                    let sqlgrenade = `Update deck set deck_card_hp = deck_card_hp - 2 where deck_pm_id = $1 and deck_pos_id > 1 and deck_pos_id != 4`
                     await pool.query(sqlgrenade,[opPmId]);
             break;
 
@@ -604,7 +604,7 @@ async function Spells(pmId, deckId, cardId){
 
 
             case(9):
-                    let sqlpolymorph = `Update deck set deck_card_id = 11 where deck_pm_id = $1 and deck_pos_id > 1`
+                    let sqlpolymorph = `Update deck set deck_card_id = 11 where deck_pm_id = $1 and deck_pos_id > 1 and deck_pos_id != 4`
                     await pool.query(sqlpolymorph,[opPmId]);
             break;
             
