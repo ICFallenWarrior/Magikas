@@ -54,8 +54,5 @@ insert into deck (deck_pm_id,deck_pos_id,deck_card_id,deck_card_hp) values (1,1,
 insert into deck (deck_pm_id,deck_pos_id,deck_card_id,deck_card_hp) values (1,1,1,4);
 insert into deck (deck_pm_id,deck_pos_id,deck_card_id,deck_card_hp) values (2,1,2,4);
 insert into deck (deck_pm_id,deck_pos_id,deck_card_id,deck_card_hp) values (2,1,5,4);
-insert into deck (deck_pm_id,deck_pos_id,deck_card_id,deck_card_hp) values (2,1,3,4);
-
-
 
 commit;
